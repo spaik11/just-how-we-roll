@@ -31,7 +31,7 @@ function rollD6() {
 
     document.querySelector('#d6-rolls-mean').innerText = getMean(sixes).toFixed(2)
     document.querySelector('#d6-rolls-median').innerText = getMed(sixes).toFixed(0)
-
+    document.querySelector('#d6-rolls-mode').innerText = getMode(sixes).toFixed(0)
 }
 
 function rollDoubleD6() {
@@ -41,18 +41,30 @@ function rollDoubleD6() {
     doubleSixes.push(result1 + result2);
     document.querySelector('#double-d6-roll-1').src = `./images/d6/${result1}.png`
     document.querySelector('#double-d6-roll-2').src = `./images/d6/${result2}.png`
+
+    document.querySelector('#double-d6-rolls-mean').innerText = getMean(doubleSixes).toFixed(2)
+    document.querySelector('#double-d6-rolls-median').innerText = getMed(doubleSixes).toFixed(0)
+    document.querySelector('#double-d6-rolls-mode').innerText = getMode(doubleSixes).toFixed(0)
 }
 
 function rollTwelves() {
     const result = getRandomNumber(12);
     twelves.push(result);
     d12.src = `./images/numbers/${result}.png`
+
+    document.querySelector('#d12-rolls-mean').innerText = getMean(twelves).toFixed(2)
+    document.querySelector('#d12-rolls-median').innerText = getMed(twelves).toFixed(0)
+    document.querySelector('#d12-rolls-mean').innerText = getMode(twelves).toFixed(0)
 }
 
 function rollTwenty() {
     const result = getRandomNumber(20)
-    twelves.push(result);
+    twenties.push(result);
     d20.src = `./images/numbers/${result}.png`
+    
+    document.querySelector('#d20-rolls-mean').innerText = getMean(twenties).toFixed(2)
+    document.querySelector('#d20-rolls-median').innerText = getMed(twenties).toFixed(0)
+    document.querySelector('#d20-rolls-mean').innerText = getMode(twenties).toFixed(0)
 }
 /*******************
  * EVENT LISTENERS *
@@ -75,12 +87,13 @@ d12.addEventListener('click', rollTwelves)
 d20.src = './images/start/d20.jpg';
 d20.addEventListener('click', rollTwenty)
 
+document.querySelector('#reset-button').addEventListener('click', reset)
 
 /****************
  * MATH SECTION *
  ****************/
 function getMean(arr) {
-    return arr.reduce((a, b) => a + b, 0) / arr.length
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
 }
 
 function getMed(arr) {
@@ -90,10 +103,35 @@ function getMed(arr) {
     return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
 }
 
-function getMode() {
+function getMode(arr) {
+    if (arr.length === 0) {
+        return null;
+    } else if (arr.length === 1) {
+        return arr[0];
+    }
 
+    arr = arr.sort();
+    let mode = null;
+    let counts = 1;
+    let maxCounts = 0;
+
+    for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == arr[i + 1] || arr.length-1 == i) {
+        counts ++;
+    } else {
+    if (maxCounts < counts) {
+        maxCounts = counts;
+        mode = arr[i];
+    }
+    counts = 1;
+    }
+}
+    return mode;
 }
 
 /*********
  * RESET *
  *********/
+function reset() {
+    location.reload()
+}
