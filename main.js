@@ -54,7 +54,7 @@ function rollTwelves() {
 
     document.querySelector('#d12-rolls-mean').innerText = getMean(twelves).toFixed(2)
     document.querySelector('#d12-rolls-median').innerText = getMed(twelves).toFixed(0)
-    document.querySelector('#d12-rolls-mean').innerText = getMode(twelves).toFixed(0)
+    document.querySelector('#d12-rolls-mode').innerText = getMode(twelves).toFixed(0)
 }
 
 function rollTwenty() {
@@ -64,7 +64,7 @@ function rollTwenty() {
     
     document.querySelector('#d20-rolls-mean').innerText = getMean(twenties).toFixed(2)
     document.querySelector('#d20-rolls-median').innerText = getMed(twenties).toFixed(0)
-    document.querySelector('#d20-rolls-mean').innerText = getMode(twenties).toFixed(0)
+    document.querySelector('#d20-rolls-mode').innerText = getMode(twenties).toFixed(0)
 }
 /*******************
  * EVENT LISTENERS *
@@ -110,18 +110,18 @@ function getMode(arr) {
         return arr[0];
     }
 
-    arr = arr.sort();
+    let newArr = arr.sort();
     let mode = null;
     let counts = 1;
     let maxCounts = 0;
 
-    for (let i = 0; i < arr.length; i++) {
-    if (arr[i] == arr[i + 1] || arr.length-1 == i) {
+    for (let i = 0; i < newArr.length; i++) {
+    if (newArr[i] == newArr[i + 1] || newArr.length - 1 == i) {
         counts ++;
     } else {
     if (maxCounts < counts) {
         maxCounts = counts;
-        mode = arr[i];
+        mode = newArr[i];
     }
     counts = 1;
     }
